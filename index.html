@@ -1,1 +1,326 @@
-szfsdfsdfsdf
+
+
+<div class="popup_wrapper admin_flow_information">
+   <div class="close"  ng-click="hideDashboardPopUps()"></div>
+   <div class="row">
+      <div class="col-xs-5">
+         <h1>{{'popup.adminFlowInformation.mainHeading' | translate}}</h1>
+      </div>
+      <div class="col-xs-7">
+         <div class="right_nav">
+            <ul>
+               <li class="flow_id">
+                  <fieldset class="form-group">
+                     <label for="" class="col-xs-4 text-label text-right">{{'popup.adminFlowInformation.tabGeneral.lavel.selectFlowId' | translate}}</label>
+                     <div class="col-xs-8">
+                        <span class="select_menu_wrapper">
+                           <span class="selectbox_arrow"></span>
+                           <select class="selectbox_menulist" ng-model = "admin.linkId" ng-change="changeFlowInfo()">
+                              <option ng-repeat="flowIds in flowIdsArr" value="{{flowIds.value}}" >{{flowIds.value}}</option>
+                              <!-- <option value="Option 1">Option 1</option>
+                                 <option value="Option 2">Option 2</option>
+                                 <option value="Option 3">Option 3</option> -->
+                           </select>
+                        </span>
+                     </div>
+                  </fieldset>
+               </li>
+               <!-- <li class="btn_play"></li>
+                  <li class="btn_delete"></li> -->
+            </ul>
+         </div>
+      </div>
+   </div>
+   <!-- TabsApp Start-->
+   <div class="TabsApp">
+      <tabset class="tab-animation">
+         <tab tabtitle="{{'popup.adminFlowInformation.tabs.general' | translate}}">
+            <div class="tab_1 ">
+               <div class="web_detail_wrap">
+                  <div class="col-xs-7">
+                     <div>
+                        <label class="col-xs-4 text-right">{{'popup.adminFlowInformation.tabGeneral.lavel.flowId' | translate}}</label>
+                        <p class="col-xs-8">{{flowInfo.linkid}}</p>
+                     </div>
+                     <div>
+                        <label class="col-xs-4 text-right">{{'popup.adminFlowInformation.tabGeneral.lavel.name' | translate}}</label>
+                        <p class="col-xs-8">{{flowInfo.tag}}</p>
+                     </div>
+                     <div>
+                        <label class="col-xs-4 text-right">{{'popup.adminFlowInformation.tabGeneral.lavel.description' | translate}}</label>
+                        <p class="col-xs-8">{{flowInfo.description}}</p>
+                     </div>
+                  </div>
+                  <div class="col-xs-5">
+                     <div>
+                        <label class="col-xs-6 text-right">{{'popup.adminFlowInformation.tabGeneral.lavel.currentBandwidth' | translate}}</label>
+                        <p class="col-xs-6">{{totalbandwidth / 1000 | bandwidthFilter}}</p>
+                     </div>
+                     <div>
+                        <label class="col-xs-6 text-right">{{'popup.adminFlowInformation.tabGeneral.lavel.latency' | translate}}</label>
+                        <p class="col-xs-6">{{flowInfo.latency | latencyName}}</p>
+                     </div>
+                  </div>
+               </div>
+               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="popup_grid_table">
+                  <tr>
+                     <th></th>
+                     <th>{{'popup.adminFlowInformation.tabGeneral.lavel.dataCenter' | translate}}</th>
+                     <th>{{'popup.adminFlowInformation.tabGeneral.lavel.switchId' | translate}}</th>
+                     <th>{{'popup.adminFlowInformation.tabGeneral.lavel.switchName' | translate}}</th>
+                     <th>{{'popup.adminFlowInformation.tabGeneral.lavel.switchPort' | translate}}</th>
+                     <th>{{'popup.adminFlowInformation.tabGeneral.lavel.vlanId' | translate}}</th>
+                     <th>{{'popup.adminFlowInformation.tabGeneral.lavel.endportName' | translate}}</th>
+                     <th>{{'popup.adminFlowInformation.tabGeneral.lavel.endportUid' | translate}}</th>
+                  </tr>
+                  <tr ng-if="vportsData==0">
+                     <td colspan="8" class="message ">No record avialable.</td>
+                  </tr>
+                  <tr ng-repeat="vlist in vportsData" ng-class-even="'odd'">
+                     <td ng-if="$index == 0">A-END</td>
+                     <td  ng-if="$index != 0">Z-END</td>
+                     <td>{{vlist.datacentercode}}</td>
+                     <td>{{vlist.switchcode}}</td>
+                     <td>{{vlist.switchname}}</td>
+                     <td>{{vlist.portnumber}}</td>
+                     <td>{{vlist.vlannumber}}</td>
+                     <td>{{vlist.endpointname}}</td>
+                     <td>{{vlist.endpointuuid}}</td>
+                  </tr>
+               </table>
+               <!-- <div class="pagination">
+                  <ul>
+                  <li class="active"><a href="javascript:();">1</a></li>
+                  <li><a href="javascript:();">2</a></li>
+                  <li><a href="javascript:();">3</a></li>
+                  <li><a href="javascript:();">4</a></li>
+                  <li><a href="javascript:();">5</a></li>
+                  </ul>
+                  <div class="nxt_prv_btn"> <a class="prev_btn"><span>&nbsp;</span>Prev</a><a class="next_btn">Next<span>&nbsp;</span></a> </div>
+                  </div> -->
+            </div>
+         </tab>
+         <tab tabtitle="{{'popup.adminFlowInformation.tabs.contracts' | translate}}">
+            <div class="tab_2">
+               <div class="admin_contract_tbl">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="popup_grid_table">
+                     <tr>
+
+
+
+                        <th>
+
+                           <a class="anchor" ng-click="orderByFieldContracts='contractid'; reverseSortContracts = !reverseSortContracts">
+                           {{'popup.adminFlowInformation.tabContracts.lavel.Id' | translate}}
+                           <span class="" ng-show="orderByFieldContracts == 'contractid'">
+                           <span class="filter_arrow_up" ng-show="!reverseSortContracts"></span>
+                           <span class="filter_arrow_down" ng-show="reverseSortContracts"></span>
+                           </span>
+                           </a>
+
+						      <span class="heading_icon_search" ng-class="{'active': isActiveId}" ng-click="isActiveId=!isActiveId"></span>
+						      <input class="heading_search_box" placeholder="Search" ng-show="isActiveId" ng-model="cId">
+
+                        </th>
+
+
+
+
+                        <th>
+
+                           <a class="anchor" ng-click="orderByFieldContracts='contractStatus'; reverseSortContracts = !reverseSortContracts">
+                          {{'popup.adminFlowInformation.tabContracts.lavel.status' | translate}}
+                           <span class="" ng-show="orderByFieldContracts == 'contractStatus'">
+                           <span class="filter_arrow_up" ng-show="!reverseSortContracts"></span>
+                           <span class="filter_arrow_down" ng-show="reverseSortContracts"></span>
+                           </span>
+                           </a>
+
+						         <span class="heading_icon_search" ng-class="{'active': isActiveStatus}" ng-click="isActiveStatus=!isActiveStatus"></span>
+						         <input class="heading_search_box" placeholder="Search" ng-show="isActiveStatus" ng-model="cStatus">
+
+                        </th>
+                        <th>
+
+                           <a class="anchor" ng-click="orderByFieldContracts='bandwidth'; reverseSortContracts = !reverseSortContracts">
+                          {{'popup.adminFlowInformation.tabContracts.lavel.bandwidth' | translate}}
+                           <span class="" ng-show="orderByFieldContracts == 'bandwidth'">
+                           <span class="filter_arrow_up" ng-show="!reverseSortContracts"></span>
+                           <span class="filter_arrow_down" ng-show="reverseSortContracts"></span>
+                           </span>
+                           </a>
+
+						      <span class="heading_icon_search" ng-class="{'active': isActiveBandwidth}" ng-click="isActiveBandwidth=!isActiveBandwidth"></span>
+						      <input class="heading_search_box" placeholder="Search" ng-show="isActiveBandwidth" ng-model="cBandwidth">
+                        </th>
+                        <th>
+
+                           <a class="anchor" ng-click="orderByFieldContracts='startTime'; reverseSortContracts = !reverseSortContracts">
+                           {{'popup.adminFlowInformation.tabContracts.lavel.start' | translate}}
+                           <span class="" ng-show="orderByFieldContracts == 'startTime'">
+                           <span class="filter_arrow_up" ng-show="!reverseSortContracts"></span>
+                           <span class="filter_arrow_down" ng-show="reverseSortContracts"></span>
+                           </span>
+                           </a>
+
+                        <span class="heading_icon_search" ng-class="{'active': isActivestart}" ng-click="isActivestart=!isActivestart"></span>
+                        <input class="heading_search_box" placeholder="Search" ng-show="isActivestart" ng-model="cStart">
+
+                        </th>
+                        <th>
+
+                           <a class="anchor" ng-click="orderByFieldContracts='endTime'; reverseSortContracts = !reverseSortContracts">
+                          {{'popup.adminFlowInformation.tabContracts.lavel.expiry' | translate}}
+                           <span class="" ng-show="orderByFieldContracts == 'endTime'">
+                           <span class="filter_arrow_up" ng-show="!reverseSortContracts"></span>
+                           <span class="filter_arrow_down" ng-show="reverseSortContracts"></span>
+                           </span>
+                           </a>
+
+                        <span class="heading_icon_search" ng-class="{'active': isActiveexpiry}" ng-click="isActiveexpiry=!isActiveexpiry"></span>
+                        <input class="heading_search_box" placeholder="Search" ng-show="isActiveexpiry" ng-model="cExpiry">
+                        </th>
+                        <th>
+
+                           <a class="anchor" ng-click="orderByFieldContracts='renewalOption'; reverseSortContracts = !reverseSortContracts">
+                           {{'popup.adminFlowInformation.tabContracts.lavel.renewal' | translate}}
+                           <span class="" ng-show="orderByFieldContracts == 'renewalOption'">
+                           <span class="filter_arrow_up" ng-show="!reverseSortContracts"></span>
+                           <span class="filter_arrow_down" ng-show="reverseSortContracts"></span>
+                           </span>
+                           </a>
+
+                        <span class="heading_icon_search" ng-class="{'active': isActiverenewal}" ng-click="isActiverenewal=!isActiverenewal"></span>
+                        <input class="heading_search_box" placeholder="Search" ng-show="isActiverenewal" ng-model="cRenewal">
+
+                        </th>
+                        <!-- <th>{{'popup.adminFlowInformation.tabContracts.lavel.price' | translate}}</th> -->
+                        <!--<th><span class="icon_delete"></span></th>-->
+                     </tr>
+                     <tr ng-if="customerContracts.length==0">
+                        <td colspan="7" class="message ">{{'popup.common.noRecordAvailable' | translate}}</td>
+                     </tr>
+                     <tr dir-paginate="contract in customerContracts |orderBy:orderByFieldContracts:reverseSortContracts |filter:{ contractid:cId,contractStatus:cStatus,bandwidth:cBandwidth,startTime:cStart,endTime:cExpiry,renewalOption:cRenewal} | itemsPerPage: limits" current-page="currentPage" pagination-id="cust-$index">
+                        <td>{{contract.contractid}}</td>
+                        <td>{{contract.contractStatus}}</td>
+                        <td>{{contract.bandwidth / 1000}} Mbps</td>
+                        <td>{{contract.startTime |date: 'medium' : $rootScope.actualTimeZone}}</td>
+                        <td>{{contract.endTime | date: 'medium' : $rootScope.actualTimeZone}}</td>
+                        <td>{{contract.renewalOption}}</td>
+                        <!--  <td>US$ {{contract.price}}</td> -->
+                        <!--<td><span class="icon_delete" ng-click="deleteContract(contract.contractid,customersFlowsList.linkid)"></span></td>-->
+                     </tr>
+                  </table>
+               </div>
+               <!--    <div class="pagination">
+                  <ul>
+                  <li class="active"><a href="javascript:();">1</a></li>
+                  <li><a href="javascript:();">2</a></li>
+                  <li><a href="javascript:();">3</a></li>
+                  <li><a href="javascript:();">4</a></li>
+                  <li><a href="javascript:();">5</a></li>
+                  </ul>
+                  <div class="nxt_prv_btn"> <a class="prev_btn"><span>&nbsp;</span>Prev</a><a class="next_btn">Next<span>&nbsp;</span></a> </div>
+                  </div> -->
+               <dir-pagination-controls boundary-links="true" pagination-id="cust-$index" on-page-change="pageChangeHandler(newPageNumber)" ng-show="customerContracts.length >= limits" template-url="components/dashboard/admin-dashboard-pagination.tpl.html" ></dir-pagination-controls>
+            </div>
+         </tab>
+         <tab tabtitle="{{'popup.adminFlowInformation.tabs.graphs' | translate}}">
+            <div class="tab_3">
+               <div class="tab_graph">
+                  <div class="col-xs-10">
+                     <!--<img src="../css/images/admin/admin_flow_tab_graph.png"/>-->
+                     <canvas id="flow-info-line" class="chart chart-line" chart-options="graph.options"  chart-data="endpoint.graph.data"
+                        chart-labels="endpoint.graph.lavels" chart-colours="graph.colours" hover="false" chart-hover="false" height="{{endpoint.graph.height}}" width="{{endpoint.graph.width}}">
+                     </canvas>
+
+                     
+
+
+                  </div>
+                  <div class="col-xs-2">
+                     <div class="right_side_filter">
+					 <form name="myForm" noValidate>
+						
+                     <ul class="line-legend"><li><span style="background-color:#495cff;" class="line-legend-icon"></span><span class="line-legend-text">Forward</span></li><li><span style="background-color:#aad200;" class="line-legend-icon"></span><span class="line-legend-text">Reverse</span></li></ul>
+                     
+                        <span class="select_menu_wrapper">
+                           <span class="selectbox_arrow"></span>
+                           <select class="selectbox_menulist"  ng-change="endpoint.showEndPointStatsDataPUP()" ng-model="endpoint.graph.selectedIdx">
+                              <option value="bytes">Bits/sec</option>
+                              <option value="packets">Packets/sec</option>
+                              <option value="megabytes">Megabytes/sec</option>
+                           </select>
+                        </span>
+                        <div class="dropdown">
+							<a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target="#"
+							   >
+							<span class="input">
+							<label>From 
+							<span class="calendar" ng-class="{active:isActiveDate}" ng-click="dateActive()"></span>
+							</label>
+							</span></a>
+							<span class="input" style="margin-top: 0px;">
+							<input type="text" data-ng-model="graph.filters[0].from" id="dateFrom" name="dateFrom" class="form-control angular-datepicker-input" placeholder="YYYY-MM-DD HH:mm" placeholder="From" data-date-time-input="YYYY-MM-DD HH:mm" ng-readonly="true">
+							</span>
+							
+							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+							   <datetimepicker data-ng-model="graph.filters[0].from"
+								  data-datetimepicker-config="{ dropdownSelector: '#dropdown1' }"></datetimepicker>
+							</ul>
+						 </div>
+
+                        <span class="input">
+                        <label>To </label>
+                        <a ng-class="{'disable': graph.filters[0].autoReload}" ng-click="graph.getCurrentDateTimePUP()">Now </a>
+                        <input ng-disabled="graph.filters[0].autoReload" ng-readonly="true" data-ng-model="graph.filters[0].currentDateTime" type="text" class="form-control" id="currentDate1" placeholder="To" value="{{graph.filters[0].currentDateTime}}">
+                        </span>
+                        <span class="input">
+                           <div class="check_box">
+                              <input id="mapCheck" type="checkbox" name="checkbox" value="1" ng-click="graph.setAutoReloadPUP()">
+                              <label for="mapCheck"><span>Autoreload (Sec.)</span></label>
+                           </div>
+                           <input ng-show="graph.filters[0].autoReload"  type="text" class="form-control" id="autoreload" name="autoreload" placeholder="Autoreload (Sec.)" value=""  data-ng-model="graph.filters[0].autoReloadTime" input-validate="^\d+$" input-validate-flags="i" ng-invalid="myForm.$invalid" ng-class="{'form_error': myForm.autoreload.$error.inputValidate}">
+                        </span>
+                        <span class="input">
+                        <label>Downsampling </label>
+                        <input type="text" class="form-control" id="downsampling" placeholder="To" value="" name="downsampling"  data-ng-model="graph.filters[0].downSampling" input-validate="^\d+(s|h|m){1}$" input-validate-flags="i" ng-invalid="myForm.$invalid" ng-class="{'form_error': myForm.downsampling.$error.inputValidate}">
+                        </span>
+						</form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </tab>
+         <tab tabtitle="{{'popup.adminFlowInformation.tabs.paths' | translate}}">
+            <div class="tab_4">
+               <div class="tab_path">
+                  <div class="col-xs-6">
+                     <div class="title">Forward path</div>
+                     <div class="path" ng-repeat="fpath in forwardPath track by $index">
+                        <div class="number">{{fpath["ingress-port"][0]}}</div>
+                        <div class="line"></div>
+                        <div class="text">{{fpath.switchJoined}}</div>
+                        <div class="line"></div>
+                        <div class="number">{{fpath["egress-port"][0]}}</div>
+                     </div>
+                  </div>
+                  <!--<div class="col-xs-1"></div>-->
+                  <div class="col-xs-6">
+                     <div class="title">Reverse path</div>
+                     <div class="path" ng-repeat="rpath in reversePath track by $index">
+                        <div class="number">{{rpath["ingress-port"][0]}}</div>
+                        <div class="line"></div>
+                        <div class="text">{{rpath.switchJoined}}</div>
+                        <div class="line"></div>
+                        <div class="number">{{rpath["egress-port"][0]}}</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </tab>
+      </tabset>
+   </div>
+   <!-- TabsApp End--> 
+</div>
+
